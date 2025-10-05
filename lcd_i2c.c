@@ -17,10 +17,10 @@ static void write_expander(uint8_t data) {
 
 static void pulse_enable_pin(uint8_t data) {
     write_expander(data | En);
-	i2c.micro_sec_timer(5);
+	i2c.micro_sec_timer(1);
 
 	write_expander(data & ~En);
-	i2c.micro_sec_timer(5);
+	i2c.micro_sec_timer(1);
 }
 
 static void write4bits(uint8_t data) {
@@ -41,12 +41,12 @@ static void command(uint8_t value) {
 
 static void clear() {
     command(CLEAR_DISPLAY);
-    i2c.micro_sec_timer(5000);
+    i2c.micro_sec_timer(50);
 }
 
 static void home() {
     command(RETURN_HOME);
-    i2c.micro_sec_timer(5000);
+    i2c.micro_sec_timer(50);
 }
 
 static void turn_off_backlight(void) {
@@ -59,12 +59,12 @@ static void turn_on_backlight(void) {
     write_expander(0);
 }
 
-static void turn_on_base_cursor() {
+static void turn_on_underline_cursor() {
     current_display_state |= CURSORON;
     command(DISPLAY_CONTROL | current_display_state);
 }
 
-static void turn_off_base_cursor() {
+static void turn_off_underline_cursor() {
     current_display_state &= ~CURSORON;
     command(DISPLAY_CONTROL | current_display_state);
 }
@@ -79,18 +79,6 @@ static void turn_off_blinking_cursor() {
 	command(DISPLAY_CONTROL | current_display_state);
 }
 
-static void scroll_left() {
-    command(CURSOR_DISPLAY_SHIFT | DISPLAYMOVE | MOVELEFT);
-}
-
-static void scroll_right() {
-    command(CURSOR_DISPLAY_SHIFT | DISPLAYMOVE | MOVERIGHT);
-}
-
-static void set_cursor_position(uint8_t row, uint8_t col) {
-    command(SET_DDRAM_ADDRESS | ((col%40) + (row%4 * 0x40)));
-}
-
 static void turn_off_display() {
     current_display_state &= ~DISPLAYON;
     command(DISPLAY_CONTROL | current_display_state);
@@ -99,6 +87,28 @@ static void turn_off_display() {
 static void turn_on_display() {
     current_display_state |= DISPLAYON;
     command(DISPLAY_CONTROL | current_display_state);
+}
+
+static void scroll_left() {
+    command(CURSOR_DISPLAY_SHIFT | DISPLAYMOVE | MOVELEFT);
+}
+
+static void scroll_right() {
+    command(CURSOR_DISPLAY_SHIFT | DISPLAYMOVE | MOVERIGHT);
+}
+
+static void set_left_to_right() {
+	current_entry_mode |= ENTRYLEFT;
+	command(SET_ENTRY_MODE | current_entry_mode);
+}
+
+static void set_right_to_left() {
+	current_entry_mode &= ~ENTRYLEFT;
+	command(SET_ENTRY_MODE | current_entry_mode);
+}
+
+static void set_cursor_position(uint8_t row, uint8_t col) {
+    command(SET_DDRAM_ADDRESS | ((col%40) + (row%4 * 0x40)));
 }
 
 static void write(uint8_t value) {
@@ -147,6 +157,8 @@ const struct lcd_i2c LCD_I2C = {
 		.set_cursor_position = set_cursor_position,
 		.hide_display = turn_off_display,
 		.show_display = turn_on_display,
-		.turn_on_base_cursor = turn_on_base_cursor,
-		.turn_off_base_cursor = turn_off_base_cursor
+		.turn_on_underline_cursor = turn_on_underline_cursor,
+		.turn_off_underline_cursor = turn_off_underline_cursor,
+		.set_left_to_right = set_left_to_right,
+		.set_right_to_left = set_right_to_left
 };

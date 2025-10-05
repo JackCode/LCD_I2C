@@ -74,8 +74,10 @@ struct lcd_i2c {
 	void (*set_cursor_position)(uint8_t row, uint8_t col);
 	void (*hide_display)(void);
 	void (*show_display)(void);
-	void (*turn_on_base_cursor)(void);
-	void (*turn_off_base_cursor)(void);
+	void (*turn_on_underline_cursor)(void);
+	void (*turn_off_underline_cursor)(void);
+	void (*set_left_to_right)(void);
+	void (*set_right_to_left)(void);
 };
 
 extern const struct lcd_i2c LCD_I2C;
