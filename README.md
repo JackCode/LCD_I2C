@@ -14,8 +14,16 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
 
 ## How to Use LCD_I2C
   1. Download the .h and .c files to your project
-  2. #inlcude "lcd_i2c.h" in your project
+  2. Include the LCD_I2C header in your project
+  
+      ```C
+        #include "lcd_i2c.h"
+		
   3. Initialize your I2C interface on your MCU
+  
+      ```C
+	    my_mcu_i2c_init();
+		
   4. Create an ```I2C_Interface``` struct and assign the appropriate functions from your mcu
   
       ```C
