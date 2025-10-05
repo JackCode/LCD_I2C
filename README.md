@@ -8,7 +8,7 @@ The library requires the following I2C functions to be provided at time of initi
   * Send start condition and 7-bit target device address
   * Send one byte of data
   * Send stop condition
-  * Delay timer measured in milliseconds
+  * Delay timer measured in microseconds
 
 Any I2C setup must have already been completed (i.e. initalized) before initializing the LCD.
 
