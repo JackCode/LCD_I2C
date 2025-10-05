@@ -47,7 +47,8 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
 		LCD_I2C.init(i2c, 0x28);     
 	  ```
 
-  6. Start using the LCD_I2C library. Note: The LCD initializes to the display, cursors, and backlight off, so you need to turn them on to see any written characters.
+  6. Start using the LCD_I2C library.
+     Note: The LCD initializes to the display, cursors, and backlight off, so you need to turn them on to see any written characters.
 
   	  ```C
 		LCD_I2C.write('H');
