@@ -42,7 +42,7 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
   	  ```C
      	LCD_I2C.init(i2c);
 	  ```
-	or
+  or
 	  ```C
         LCD_I2C.init(i2c, 0x28);
 	  ```
