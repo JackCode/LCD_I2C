@@ -16,11 +16,13 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
   1. Download the .h and .c files to your project
   2. #inlcude "lcd_i2c.h" in your project
   3. Initialize your I2C interface on your MCU
-  4. Create a ```I2C_Interface``` struct and assign the appropriate functions from your mcu
+  4. Create an ```I2C_Interface``` struct and assign the appropriate functions from your mcu
+  
       ```struct I2C_Interface i2c = {
 		      .send_one_byte_of_data = mcu_transmit_byte_function,
 		      .send_start_condition_and_7bit_address = mcu_begin_transmission_function,
 		      .send_stop_condition = mcu_end_transmission_function,
 		      .micro_sec_timer = mcu_microsecond_delay_timer_function
           };```
+		  
   5. Start using the LCD_I2C library by calling the methods in the LCD_I2C struct.
