@@ -26,4 +26,16 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
 		      .micro_sec_timer = mcu_microsecond_delay_timer_function
           };
 		  
-  5. Start using the LCD_I2C library by calling the methods in the LCD_I2C struct.
+  5. Call LCD_I2C.init and pass in the i2c struct and an optional device address (default is 0x27)
+  
+  	```C
+     	LCD_I2C.init(i2c);
+     
+  6. Start using the LCD_I2C library. Note: The LCD initializes to the display, cursors, and backlight off, so you need to turn them on to see any written characters.
+
+  	```C
+		LCD_I2C.write('H');
+		LCD_I2C.write('i');
+		LCD_I2C.write('!');
+		LCD_I2C.turn_on_backlight();
+		LCD_I2C.show_display();
