@@ -18,6 +18,7 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
   
       ```C
         #include "lcd_i2c.h"
+	  ```
       
   3. Initialize your I2C interface on your MCU
   
