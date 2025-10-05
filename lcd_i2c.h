@@ -80,6 +80,7 @@ struct lcd_i2c {
 	void (*set_right_to_left)(void);
 	void (*turn_on_auto_scroll)(void);
 	void (*turn_off_auto_scroll)(void);
+	void (*create_custom_character)(uint8_t location, uint8_t charmap[]);
 };
 
 extern const struct lcd_i2c LCD_I2C;

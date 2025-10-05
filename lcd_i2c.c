@@ -9,6 +9,15 @@ static uint8_t current_display_state = DISPLAYOFF | CURSOROFF | BLINKOFF;
 static uint8_t current_function_state = F_4BITMODE | F_2LINE | F_5x8DOTS;
 static uint8_t current_entry_mode = ENTRYLEFT | ENTRYSHIFTDECREMENT;
 
+uint8_t CUSTOM_CHAR_HEART[8]  = {0x0,0xa,0x1f,0x1f,0xe,0x4,0x0};
+uint8_t CUSTOM_CHAR_BELL[8]  = {0x4,0xe,0xe,0xe,0x1f,0x0,0x4};
+uint8_t CUSTOM_CHAR_NOTE[8]  = {0x2,0x3,0x2,0xe,0x1e,0xc,0x0};
+uint8_t CUSTOM_CHAR_CLOCK[8] = {0x0,0xe,0x15,0x17,0x11,0xe,0x0};
+uint8_t CUSTOM_CHAR_DUCK[8]  = {0x0,0xc,0x1d,0xf,0xf,0x6,0x0};
+uint8_t CUSTOM_CHAR_CHECK[8] = {0x0,0x1,0x3,0x16,0x1c,0x8,0x0};
+uint8_t CUSTOM_CHAR_CROSS[8] = {0x0,0x1b,0xe,0x4,0xe,0x1b,0x0};
+uint8_t CUSTOM_CHAR_RETARROW[8] = {	0x1,0x1,0x5,0x9,0x1f,0x8,0x4};
+
 static void write_expander(uint8_t data) {
     i2c.send_start_condition_and_7bit_address(device_address);
 	i2c.send_one_byte_of_data(data | current_backlight_state);
@@ -112,19 +121,27 @@ static void set_cursor_position(uint8_t row, uint8_t col) {
 }
 
 // This will 'right justify' text from the cursor
-void turn_on_auto_scroll(void) {
+static void turn_on_auto_scroll(void) {
 	current_entry_mode |= ENTRYSHIFTINCREMENT;
 	command(SET_ENTRY_MODE | current_entry_mode);
 }
 
 // This will 'left justify' text from the cursor
-void turn_off_auto_scroll(void) {
+static void turn_off_auto_scroll(void) {
 	current_entry_mode &= ~ENTRYSHIFTINCREMENT;
 	command(SET_ENTRY_MODE | current_entry_mode);
 }
 
 static void write(uint8_t value) {
     send(value, Rs);
+}
+ 
+static void create_custom_character(uint8_t location, uint8_t charmap[]) {
+	location &= 0x7;
+	command(SET_CGRAM_ADDRESS | (location << 3));
+	for (int i=0; i<8; i++) {
+		write(charmap[i]);
+	}
 }
 
 static void init(struct I2C_Interface i2c_interface) {
@@ -174,5 +191,6 @@ const struct lcd_i2c LCD_I2C = {
 		.set_left_to_right = set_left_to_right,
 		.set_right_to_left = set_right_to_left,
 		.turn_on_auto_scroll = turn_on_auto_scroll,
-		.turn_off_auto_scroll = turn_off_auto_scroll
+		.turn_off_auto_scroll = turn_off_auto_scroll,
+		.create_custom_character = create_custom_character
 };
