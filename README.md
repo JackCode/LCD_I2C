@@ -1,5 +1,5 @@
 # LCD_I2C
-Liquid Crystal Display (HD44780) library in C with injected I2C API to decouple from a required MCU.
+Liquid Crystal Display (HD44780) MCU agnostic C library.
 
 ## I2C Requirements
 The library is based on the use of a [PCF8574](https://www.nxp.com/docs/en/data-sheet/PCF8574_PCF8574A.pdf) 8-bit I/O I2C expander.
