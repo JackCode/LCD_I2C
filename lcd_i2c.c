@@ -111,6 +111,18 @@ static void set_cursor_position(uint8_t row, uint8_t col) {
     command(SET_DDRAM_ADDRESS | ((col%40) + (row%4 * 0x40)));
 }
 
+// This will 'right justify' text from the cursor
+void turn_on_auto_scroll(void) {
+	current_entry_mode |= ENTRYSHIFTINCREMENT;
+	command(SET_ENTRY_MODE | current_entry_mode);
+}
+
+// This will 'left justify' text from the cursor
+void turn_off_auto_scroll(void) {
+	current_entry_mode &= ~ENTRYSHIFTINCREMENT;
+	command(SET_ENTRY_MODE | current_entry_mode);
+}
+
 static void write(uint8_t value) {
     send(value, Rs);
 }
@@ -160,5 +172,7 @@ const struct lcd_i2c LCD_I2C = {
 		.turn_on_underline_cursor = turn_on_underline_cursor,
 		.turn_off_underline_cursor = turn_off_underline_cursor,
 		.set_left_to_right = set_left_to_right,
-		.set_right_to_left = set_right_to_left
+		.set_right_to_left = set_right_to_left,
+		.turn_on_auto_scroll = turn_on_auto_scroll,
+		.turn_off_auto_scroll = turn_off_auto_scroll
 };
