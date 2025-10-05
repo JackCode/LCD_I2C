@@ -59,3 +59,6 @@ or
   LCD_I2C.turn_on_backlight();
   LCD_I2C.show_display();
 ```
+
+## API Summary
+Coming soon...
