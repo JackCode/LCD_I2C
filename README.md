@@ -22,9 +22,9 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
       
   3. Initialize your I2C interface on your MCU
   
-      ```C
+       ```C
 	    my_mcu_i2c_init();
-	  ```
+	   ```
 
   4. Create an ```I2C_Interface``` struct and assign the appropriate functions from your mcu
   
@@ -44,9 +44,9 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
 	  ```
   or
   
-      ```C
+       ```C
         LCD_I2C.init(i2c, 0x28);
-	  ```
+	   ```
 
   6. Start using the LCD_I2C library. Note: The LCD initializes to the display, cursors, and backlight off, so you need to turn them on to see any written characters.
 
