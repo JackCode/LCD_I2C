@@ -24,6 +24,7 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
   
       ```C
 	    my_mcu_i2c_init();
+	  ```
 
   4. Create an ```I2C_Interface``` struct and assign the appropriate functions from your mcu
   
@@ -34,15 +35,17 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
 		      .send_stop_condition = mcu_end_transmission_function,
 		      .micro_sec_timer = mcu_microsecond_delay_timer_function
           };
+	  ```
 
   5. Call LCD_I2C.init and pass in the i2c struct and an optional device address (default is 0x27)
   
   	  ```C
      	LCD_I2C.init(i2c);
-
+	  ```
 	or
-
+	  ```C
         LCD_I2C.init(i2c, 0x28);
+	  ```
 
   6. Start using the LCD_I2C library. Note: The LCD initializes to the display, cursors, and backlight off, so you need to turn them on to see any written characters.
 
@@ -52,3 +55,4 @@ Any I2C setup must have already been completed (i.e. initalized) before initiali
 		LCD_I2C.write('!');
 		LCD_I2C.turn_on_backlight();
 		LCD_I2C.show_display();
+	  ```
